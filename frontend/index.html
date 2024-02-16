@@ -95,11 +95,11 @@
             font-size: 14px;
             color: #949494;
             padding: 5px;
-            border-bottom: 1px solid #dddddd;
+            border: 1px solid #dddddd;
         }
 
         .table td {
-            border-bottom: 1px solid #dddddd;
+            border: 1px solid #dddddd;
             padding: 20px;
             color: #000000;
             font-weight: 600;
@@ -225,12 +225,11 @@
             <button class="close">x</button>
             </span>
             <form name="add">
-                <input type="text" name="change_name" placeholder="Заголовок" id="name_2">
-                <input type="text" name="change_name" placeholder="Описание" id="name_2">
-                <input type="time" name="change_name" placeholder="Время (type=time)" id="name_2">
-                <input type="date" name="change_name" placeholder="Время (type=date)" id="name_2">
-                <input type="text" name="change_age" placeholder="Тип задачи (select - option - new/progress/done)"
-                    id="ages_2">
+                <input type="text" class="title" placeholder="Заголовок">
+                <input type="text" class="description" placeholder="Описание">
+                <input type="date" class="date" placeholder="Время (type=date)">
+                <input type="time" class="time" placeholder="Время (type=time)">
+                <input type="text" class="type" placeholder="Тип: не выполнено; в прогрессе; выполнено">
                 <button type="button" id="first">Добавить</button>
             </form>
         </div>
