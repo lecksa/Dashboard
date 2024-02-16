@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .wrap {
+            padding-top: 20px;
+            width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 38px;
+            justify-content: center;
+
+            .text {
+                display: flex;
+                gap: 26px;
+
+                h1 {
+                    font-weight: 600;
+                    font-size: 48px;
+                }
+
+                button {
+                    width: 183px;
+                    height: 46px;
+                    border-radius: 10px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    border: 1px solid rgb(70, 70, 212);
+                    background-color: rgb(70, 70, 212);
+                    color: white;
+                    cursor: pointer;
+                    transition: .5s ease;
+                    position: relative;
+                    top: 5px;
+                }
+
+                button:hover {
+                    background-color: rgb(55, 55, 153);
+                }
+
+                button:active {
+                    background-color: rgb(30, 30, 112);
+                }
+            }
+
+            .text_2 {
+                display: flex;
+                gap: 16px;
+
+                p {
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .active_p {
+            font-weight: 700 !important;
+            color: #007FFF !important;
+        }
+
+        .not_act_p {
+            color: #979797 !important;
+        }
+
+        .red_td {
+            color: #FF3F3F !important;
+        }
+
+        .blue_td {
+            color: #007FFF !important;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dddddd;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            font-weight: 600;
+            font-size: 14px;
+            color: #949494;
+            padding: 5px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .table td {
+            border-bottom: 1px solid #dddddd;
+            padding: 20px;
+            color: #000000;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        dialog {
+            width: 550px;
+            height: 577px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            border: 1px;
+            padding: 56px;
+            border-radius: 10px;
+
+            .inner {
+                width: 438px;
+                height: 465px;
+                border-radius: 10px;
+                border: 1px;
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                
+                span {
+                    font-size: 48px;
+                    font-weight: 700;
+                    color: black;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .close{
+                        border: none;
+                        background-color: white;
+                        color: black;
+                        font-size: 48px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    }
+                }
+
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    input {
+                        width: 438px;
+                        height: 56px;
+                        border-radius: 10px;
+                        padding: 20px;
+                        border: 1px solid black;
+                        outline: none;
+                        cursor: pointer;
+                        font-weight: 600;
+                        font-size: 16px;
+                    }
+
+                    #first {
+                        width: 438px;
+                        height: 56px;
+                        border-radius: 10px;
+                        border: 1px;
+                        background-color: #0047FF;
+                        font-size: 18px;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        cursor: pointer;
+                        transition: .5s ease;
+
+                    }
+
+                    #first:hover {
+                        background-color: rgb(55, 55, 153);
+                    }
+
+                    #first:active {
+                        background-color: rgb(30, 30, 112);
+                    }
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+        <div class="text">
+            <h1>Dashboard</h1>
+            <button>Добавить задачу</button>
+        </div>
+        <div class="text_2">
+            <p>Показать задачи как:</p>
+            <p class="active_p">Таблица</p>
+            <p>Плитка</p>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Заголовок задачи</th>
+                    <th>Описание задачи</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Выполнено</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <dialog data-modal>
+        <div class="inner">
+            <span>Добавить
+            <button class="close">x</button>
+            </span>
+            <form name="add">
+                <input type="text" name="change_name" placeholder="Заголовок" id="name_2">
+                <input type="text" name="change_name" placeholder="Описание" id="name_2">
+                <input type="time" name="change_name" placeholder="Время (type=time)" id="name_2">
+                <input type="date" name="change_name" placeholder="Время (type=date)" id="name_2">
+                <input type="text" name="change_age" placeholder="Тип задачи (select - option - new/progress/done)"
+                    id="ages_2">
+                <button type="button" id="first">Добавить</button>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
