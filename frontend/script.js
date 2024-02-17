@@ -4,6 +4,7 @@ let close = document.querySelector('.close')
 
 let plit = document.querySelector('.plit')
 let table = document.querySelector('.table')
+let tbody = document.querySelector('tbody')
 let ps = document.querySelectorAll('.text_2 p')
 let tablisa = document.querySelector('.tablisa')
 
@@ -41,7 +42,7 @@ new_add.onclick = () => {
 
         if (tablisa.classList.contains('active_p')) {
             // plit.style.display = "none"
-            reload(lists, table)
+            reload(lists, tbody)
         } else {
             // table.style.display = "none"
             reload_plitka(lists, plit)
@@ -79,28 +80,6 @@ ps.forEach(p => {
 function reload(arr, place) {
     place.innerHTML = ""
 
-    //а
-    let thead = document.createElement('thead')
-    let tbody = document.createElement('tbody')
-    let tr_th = document.createElement('tr')
-    let title_th = document.createElement('th')
-    let description_th = document.createElement('th')
-    let date_th = document.createElement('th')
-    let time_th = document.createElement('th')
-    let type_th = document.createElement('th')
-
-    //b
-    title_th.innerHTML = 'Заголовок задачи'
-    description_th.innerHTML = 'Описание задачи'
-    date_th.innerHTML = 'Дата'
-    time_th.innerHTML = 'Время'
-    type_th.innerHTML = 'Выполнено'
-
-    //c
-    place.append(thead, tbody)
-    thead.append(tr_th)
-    tr_th.append(title_th, description_th, date_th, time_th, type_th)
-
     for (let item of arr) {
         let tr_td = document.createElement('tr')
         let title = document.createElement('td')
@@ -117,7 +96,7 @@ function reload(arr, place) {
 
         item.status = false
 
-        tbody.append(tr_td)
+        place.append(tr_td)
         tr_td.append(title, description, date, time, type)
 
         if (type.innerHTML === "в прогрессе") {
