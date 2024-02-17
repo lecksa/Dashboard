@@ -26,7 +26,7 @@ close.onclick = () => {
 
 new_add.onclick = () => {
 
-    if (title_inp.value.trim() !== '' && description_inp.value.trim() !== '' && time_inp.value.trim() !== '' && date_inp.value.trim() !== '' && type_inp.value.trim() == "выполнено" || type_inp.value.trim() === "не выполнено" || type_inp.value.trim() === "в прогрессе") {
+    if (title_inp.value.trim() !== '' && description_inp.value.trim() !== '' && time_inp.value.trim() !== '' && date_inp.value.trim() !== '' && type_inp.value.trim() === "готово" || type_inp.value.trim() === "не выполнено" || type_inp.value.trim() === "в прогрессе") {
 
         let inputs = {
             title: title_inp.value.trim(),
