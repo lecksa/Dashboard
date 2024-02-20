@@ -2,9 +2,8 @@ let dialog = document.querySelector('dialog')
 let open = document.querySelector('.text button')
 let close = document.querySelector('.close')
 
-let plit = document.querySelector('.plit')
-let table = document.querySelector('.table')
-let tbody = document.querySelector('tbody')
+let wrap = document.querySelector('.wrap .wrap')
+
 let ps = document.querySelectorAll('.text_2 p')
 let tablisa = document.querySelector('.tablisa')
 
@@ -17,6 +16,18 @@ let date_inp = document.querySelector('.date')
 let time_inp = document.querySelector('.time')
 let type_inp = document.querySelector('.type')
 
+let selected_text = ''
+
+type_inp.onclick = () => {
+    select()
+}
+
+function select() {
+    let selected = type_inp.options[type_inp.selectedIndex]
+    selected_text = selected.innerHTML
+}
+
+
 open.onclick = () => {
     dialog.showModal()
 }
@@ -27,42 +38,35 @@ close.onclick = () => {
 
 new_add.onclick = () => {
 
-    if (title_inp.value.trim() !== '' && description_inp.value.trim() !== '' && time_inp.value.trim() !== '' && date_inp.value.trim() !== '' && type_inp.value.trim() === "готово" || type_inp.value.trim() === "не выполнено" || type_inp.value.trim() === "в прогрессе") {
+    if (title_inp.value.trim() !== '' && description_inp.value.trim() !== '' && time_inp.value.trim() !== '' && date_inp.value.trim() !== '') {
 
         let inputs = {
             title: title_inp.value.trim(),
             description: description_inp.value.trim(),
             date: date_inp.value.trim(),
             time: time_inp.value.trim(),
-            type: type_inp.value.trim(),
+            type: selected_text,
             status: false
         }
+        console.log(inputs.type);
 
         lists.push(inputs)
 
         if (tablisa.classList.contains('active_p')) {
-            // plit.style.display = "none"
-            reload(lists, tbody)
+            reload(lists, wrap)
         } else {
-            // table.style.display = "none"
-            reload_plitka(lists, plit)
+            reload_plitka(lists, wrap)
         }
 
-        // if(inputs.status){
-        //     reload_plitka(lists, plit)
-        // }else{
-        //     reload(lists, table)
-        // }
-
-        title_inp.value = ""
-        description_inp.value = ""
-        date_inp.value = ""
-        time_inp.value = ""
-        type_inp.value = ""
 
     } else {
         alert('Заполни всё')
     }
+    
+    title_inp.value = ""
+    description_inp.value = ""
+    date_inp.value = ""
+    time_inp.value = ""
 
 }
 
@@ -77,8 +81,30 @@ ps.forEach(p => {
     }
 })
 
-function reload(arr, place) {
-    place.innerHTML = ""
+function reload(arr, body) {
+    body.innerHTML = ""
+
+    let table = document.createElement('table')
+    let thead = document.createElement('thead')
+    let tr_th = document.createElement('tr')
+    let title_th = document.createElement('th')
+    let description_th = document.createElement('th')
+    let date_th = document.createElement('th')
+    let time_th = document.createElement('th')
+    let type_th = document.createElement('th')
+    let tbody = document.createElement('tbody')
+
+    title_th.innerHTML = "Заголовок задачи"
+    description_th.innerHTML = "Описание задачи"
+    date_th.innerHTML = "Дата"
+    time_th.innerHTML = "Время"
+    type_th.innerHTML = "Выполнено"
+    table.classList.add('table')
+
+    body.append(table)
+    table.append(thead, tbody)
+    thead.append(tr_th)
+    tr_th.append(title_th, description_th, date_th, time_th, type_th)
 
     for (let item of arr) {
         let tr_td = document.createElement('tr')
@@ -96,7 +122,7 @@ function reload(arr, place) {
 
         item.status = false
 
-        place.append(tr_td)
+        table.append(tr_td)
         tr_td.append(title, description, date, time, type)
 
         if (type.innerHTML === "в прогрессе") {
@@ -105,12 +131,20 @@ function reload(arr, place) {
             type.classList.add('red_td')
         }
 
+
+
         console.log(arr);
     }
 }
 
-function reload_plitka(arr, place) {
-    place.innerHTML = ""
+function reload_plitka(arr, body) {
+    body.innerHTML = ""
+
+    let plit = document.createElement('div')
+
+    plit.classList.add('plit')
+
+    body.append(plit)
 
     for (let item of arr) {
         let box = document.createElement('div')
@@ -132,7 +166,7 @@ function reload_plitka(arr, place) {
 
         item.status = true
 
-        place.append(box)
+        plit.append(box)
         box.append(h1, p, time_date, h3)
         time_date.append(date, time)
 
@@ -140,6 +174,11 @@ function reload_plitka(arr, place) {
             h3.classList.add('blue_td')
         } else if (h3.innerHTML === "не выполнено") {
             h3.classList.add('red_td')
+        }
+
+        if (tablisa.classList.contains('active_p')) {
+            plit.remove()
+            reload(lists, wrap)
         }
         console.log(arr);
 

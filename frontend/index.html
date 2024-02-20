@@ -155,9 +155,9 @@
                     flex-direction: column;
                     gap: 8px;
 
-                    input {
+                    input, .type {
                         width: 438px;
-                        height: 56px;
+                        height: 60px;
                         border-radius: 10px;
                         padding: 20px;
                         border: 1px solid black;
@@ -252,18 +252,6 @@
             <p class="plitka not_act_p">Плитка</p>
         </div>
         <div class="wrap">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Заголовок задачи</th>
-                        <th>Описание задачи</th>
-                        <th>Дата</th>
-                        <th>Время</th>
-                        <th>Выполнено</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
             <div class="plit"></div>
         </div>
     </div>
@@ -276,9 +264,13 @@
             <form name="add">
                 <input type="text" class="title" placeholder="Заголовок">
                 <input type="text" class="description" placeholder="Описание">
-                <input type="date" class="date" placeholder="Время (type=date)">
-                <input type="time" class="time" placeholder="Время (type=time)">
-                <input type="text" class="type" placeholder="Тип: не выполнено; в прогрессе; выполнено">
+                <input type="date" class="date">
+                <input type="time" class="time">
+                <select class="type" id="">
+                    <option value="">не выполнено</option>
+                    <option value="">в прогрессе</option>
+                    <option value="">готово</option>
+                </select>
                 <button type="button" id="first">Добавить</button>
             </form>
         </div>
