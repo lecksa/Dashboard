@@ -1,6 +1,9 @@
+let base_url = "http://localhost:8080/lists"
+
 let dialog = document.querySelector('dialog')
 let open = document.querySelector('.text button')
 let close = document.querySelector('.close')
+let dialog_2 = document.querySelector('.sec')
 
 let wrap = document.querySelector('.wrap .wrap')
 
@@ -8,7 +11,6 @@ let ps = document.querySelectorAll('.text_2 p')
 let tablisa = document.querySelector('.tablisa')
 
 let new_add = document.querySelector('#first')
-let lists = []
 
 let title_inp = document.querySelector('.title')
 let description_inp = document.querySelector('.description')
@@ -50,25 +52,37 @@ new_add.onclick = () => {
         }
         console.log(inputs.type);
 
-        lists.push(inputs)
+        fetch(base_url, {
+            method: "post",
+            body: JSON.stringify(inputs),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.json())
+        // .then(res => res.push(inputs))
 
         if (tablisa.classList.contains('active_p')) {
-            reload(lists, wrap)
+            fetch(base_url)
+                .then(res => res.json())
+                .then(res => reload(res, wrap))
         } else {
-            reload_plitka(lists, wrap)
+            fetch(base_url)
+                .then(res => res.json())
+                .then(res => reload_plitka(res, wrap))
         }
 
+        title_inp.value = ""
+        description_inp.value = ""
+        date_inp.value = ""
+        time_inp.value = ""
 
     } else {
         alert('Заполни всё')
     }
-    
-    title_inp.value = ""
-    description_inp.value = ""
-    date_inp.value = ""
-    time_inp.value = ""
-
 }
+
+let ids
 
 ps.forEach(p => {
     p.onclick = () => {
@@ -118,7 +132,7 @@ function reload(arr, body) {
         description.innerHTML = item.description
         date.innerHTML = item.date
         time.innerHTML = item.time
-        type.innerHTML = item.type
+        type.innerHTML = selected_text
 
         item.status = false
 
@@ -131,56 +145,73 @@ function reload(arr, body) {
             type.classList.add('red_td')
         }
 
+        let delete_btn = document.querySelector('#second')
+
+        tr_td.ondblclick = () => {
+            dialog_2.showModal()
+            ids = item.id
+        }
+
+        delete_btn.onclick = () => {
+            fetch(base_url, {
+                method: "delete"
+            })
+                .then(res => {
+                    if (res.status === 200 || res.status === 201) {
+                        getData()
+                    }
+                })
 
 
-        console.log(arr);
+            console.log(arr);
+        }
     }
-}
 
-function reload_plitka(arr, body) {
-    body.innerHTML = ""
+    function reload_plitka(arr, body) {
+        body.innerHTML = ""
 
-    let plit = document.createElement('div')
+        let plit = document.createElement('div')
 
-    plit.classList.add('plit')
+        plit.classList.add('plit')
 
-    body.append(plit)
+        body.append(plit)
 
-    for (let item of arr) {
-        let box = document.createElement('div')
-        let h1 = document.createElement('h1')
-        let p = document.createElement('p')
-        let time_date = document.createElement('div')
-        let date = document.createElement('span')
-        let time = document.createElement('span')
-        let h3 = document.createElement('h3')
+        for (let item of arr) {
+            let box = document.createElement('div')
+            let h1 = document.createElement('h1')
+            let p = document.createElement('p')
+            let time_date = document.createElement('div')
+            let date = document.createElement('span')
+            let time = document.createElement('span')
+            let h3 = document.createElement('h3')
 
-        box.classList.add('box')
-        time_date.classList.add('time_date')
+            box.classList.add('box')
+            time_date.classList.add('time_date')
 
-        h1.innerHTML = item.title
-        p.innerHTML = item.description
-        date.innerHTML = item.date
-        time.innerHTML = item.time
-        h3.innerHTML = item.type
+            h1.innerHTML = item.title
+            p.innerHTML = item.description
+            date.innerHTML = item.date
+            time.innerHTML = item.time
+            h3.innerHTML = item.type
 
-        item.status = true
+            item.status = true
 
-        plit.append(box)
-        box.append(h1, p, time_date, h3)
-        time_date.append(date, time)
+            plit.append(box)
+            box.append(h1, p, time_date, h3)
+            time_date.append(date, time)
 
-        if (h3.innerHTML === "в прогрессе") {
-            h3.classList.add('blue_td')
-        } else if (h3.innerHTML === "не выполнено") {
-            h3.classList.add('red_td')
+            if (h3.innerHTML === "в прогрессе") {
+                h3.classList.add('blue_td')
+            } else if (h3.innerHTML === "не выполнено") {
+                h3.classList.add('red_td')
+            }
+
+            if (tablisa.classList.contains('active_p')) {
+                plit.remove()
+                reload(lists, wrap)
+            }
+            console.log(arr);
+
         }
-
-        if (tablisa.classList.contains('active_p')) {
-            plit.remove()
-            reload(lists, wrap)
-        }
-        console.log(arr);
-
     }
 }

@@ -155,7 +155,7 @@
                     flex-direction: column;
                     gap: 8px;
 
-                    input, .type {
+                    input, .type, .typ {
                         width: 438px;
                         height: 60px;
                         border-radius: 10px;
@@ -173,6 +173,23 @@
                         border-radius: 10px;
                         border: 1px;
                         background-color: #0047FF;
+                        font-size: 18px;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        cursor: pointer;
+                        transition: .5s ease;
+
+                    }
+
+                    #second {
+                        width: 438px;
+                        height: 56px;
+                        border-radius: 10px;
+                        border: 1px;
+                        background-color: #ff0000;
                         font-size: 18px;
                         font-weight: 600;
                         display: flex;
@@ -272,6 +289,27 @@
                     <option value="">готово</option>
                 </select>
                 <button type="button" id="first">Добавить</button>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog data-modal class="sec">
+        <div class="inner">
+            <span>Добавить
+                <button class="close">x</button>
+            </span>
+            <form name="add">
+                <input type="text" class="titl" placeholder="Заголовок">
+                <input type="text" class="descriptio" placeholder="Описание">
+                <input type="date" class="dat">
+                <input type="time" class="tim">
+                <select class="typ" id="">
+                    <option value="">не выполнено</option>
+                    <option value="">в прогрессе</option>
+                    <option value="">готово</option>
+                </select>
+                <button type="button" id="first">Добавить</button>
+                <button type="button" id="second">Удалить</button>
             </form>
         </div>
     </dialog>
